@@ -6,6 +6,8 @@ import morgan from 'morgan';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
+import workspaceRoute from './routes/workspace.js';
+
 mongoose.connect("mongodb://localhost:27017/workspacedb",
     {
         useNewUrlParser: true,
@@ -22,12 +24,9 @@ app.use(express.json());
 app.use(morgan("common"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/api/workspace', workspaceRoute);
+
 const PORT = 7700;
-
-app.get('/', (req, res) => {
-    res.send("Hello this is backend...")
-})
-
 app.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`);
 })
