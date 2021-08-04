@@ -1,11 +1,12 @@
-import { Button, Card, CardContent, Container, Grid, Paper, Box, Typography, TextField } from '@material-ui/core';
+import { Button, Card, CardContent, TextField } from '@material-ui/core';
 import { useState } from 'react';
 import useStyles from './style';
+import axios from 'axios';
 
-export default function BoardCard() {
+export default function BoardCard({ workId, currBoard }) {
     const classes = useStyles();
     const [boardUpdateFlag, setBoardUpdateFlag] = useState(true);
-    const [boardName, setBoardName] = useState('board Name');
+    const [boardName, setBoardName] = useState(currBoard.boardName);
 
     function toggleBoardUpdateFlag() {
         setBoardUpdateFlag(!boardUpdateFlag);
@@ -14,6 +15,32 @@ export default function BoardCard() {
     function handleBoardUpdateSubmit(event) {
         event.preventDefault();
         toggleBoardUpdateFlag();
+    }
+
+    function handleBoardDelete() {
+        try {
+            const deleteBoard = async () => {
+                await axios.delete(`http://localhost:7700/api/boards/${workId}/delete/${currBoard._id}`);
+                window.location.reload();
+            }
+            deleteBoard();
+        } catch (error) {
+            console.log("Something wrong with connection!!")
+        }
+    }
+
+    function updateBoardSubmit(event) {
+        event.preventDefault();
+        try {
+            const updateBoard = async () => {
+                const bName = boardName;
+                await axios.put(`http://localhost:7700/api/boards/${workId}/update/${currBoard._id}`, { boardName: boardName });
+                setBoardName(bName);
+            }
+            updateBoard();
+        } catch (error) {
+            console.log("Something wrong with connection!!")
+        }
     }
 
     function handleUpdateBoard(event) {
@@ -25,8 +52,9 @@ export default function BoardCard() {
             {boardUpdateFlag ?
                 < Card className={classes.boardPaper}>
                     <CardContent>
-                        Board <br />
-                        <Button onClick={toggleBoardUpdateFlag} style={{ marginTop: '50%' }} color='primary' >Update</Button>
+                        {boardName} <br />
+                        <Button onClick={toggleBoardUpdateFlag} style={{ marginTop: '25%' }} color='primary' >Update</Button>
+                        <Button onClick={handleBoardDelete} style={{ marginTop: '25%' }}>Delete</Button>
                     </CardContent>
                 </ Card>
                 :
@@ -34,7 +62,7 @@ export default function BoardCard() {
                     <CardContent>
 
                         <form onSubmit={handleBoardUpdateSubmit}>
-                            <TextField onChange={handleUpdateBoard} value={boardName} style={{ width: '100%' }} required /> <br />
+                            <TextField onChange={handleUpdateBoard} onSubmit={updateBoardSubmit} value={boardName} style={{ width: '100%' }} required /> <br />
                             <Button
                                 type='submit'
                             >

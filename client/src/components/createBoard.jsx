@@ -1,20 +1,30 @@
-import { Button, Card, CardContent, Container, Grid, Paper, Box, Fab, Typography, TextField } from '@material-ui/core';
+import { Button, Card, CardContent, Fab, Typography, TextField } from '@material-ui/core';
 import { useState } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import useStyles from './style';
+import axios from 'axios';
 
-export default function CreateBoard() {
+export default function CreateBoard({ workId }) {
     const classes = useStyles();
     const [boardUpdateFlag, setBoardUpdateFlag] = useState(true);
-    const [boardName, setBoardName] = useState('board Name');
+    const [boardName, setBoardName] = useState('');
 
     function toggleBoardUpdateFlag() {
         setBoardUpdateFlag(!boardUpdateFlag);
     }
 
-    function handleBoardUpdateSubmit(event) {
+    function handleBoardCreateSubmit(event) {
         event.preventDefault();
         toggleBoardUpdateFlag();
+        try {
+            const createBoard = async () => {
+                await axios.put(`http://localhost:7700/api/boards/${workId}/create`, { boardName: boardName });
+                window.location.reload()
+            }
+            createBoard();
+        } catch (error) {
+            console.log("Something wrong with connection!!")
+        }
     }
 
     function handleUpdateBoard(event) {
@@ -33,7 +43,7 @@ export default function CreateBoard() {
                 :
                 < Card className={classes.boardPaper} >
                     <CardContent>
-                        <form onSubmit={handleBoardUpdateSubmit}>
+                        <form onSubmit={handleBoardCreateSubmit}>
                             <TextField onChange={handleUpdateBoard} value={boardName} style={{ width: '100%' }} required /> <br />
                             <Button
                                 type='submit'

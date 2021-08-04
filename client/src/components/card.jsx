@@ -1,29 +1,36 @@
 import React, { useState } from 'react';
-import { Button, Card, CardContent, Container, Grid, Paper, Box, Typography, TextField } from '@material-ui/core';
+import { Button, Card, CardContent, Container, Grid, Box, TextField } from '@material-ui/core';
 import useStyles from './style';
 import PersonIcon from '@material-ui/icons/Person';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SettingsIcon from '@material-ui/icons/Settings';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import EditIcon from '@material-ui/icons/Edit';
-import CreateWork from './createWork';
 import BoardCard from './boardCard';
-import AddIcon from '@material-ui/icons/Add';
 import CreateBoard from './createBoard';
+import axios from 'axios';
 
-
-export default function SimpleCard() {
+export default function SimpleCard({ work, handleWorkDelete }) {
     const classes = useStyles();
     const [workUpdateFlag, setWorkUpdateFlag] = useState(true);
-    const [workName, setWorkName] = useState('workName');
+    const [workName, setWorkName] = useState(work.workName);
 
-    function toggleWorkUpdateFlag(event) {
+    function toggleWorkUpdateFlag() {
         setWorkUpdateFlag(!workUpdateFlag);
     }
 
     function handleWorkUpdateSubmit(event) {
         event.preventDefault();
         toggleWorkUpdateFlag();
+        const workN = { workName: workName };
+        try {
+            const updateWorkspace = async () => {
+                await axios.put(`http://localhost:7700/api/workspace/update/${work._id}`, workN);
+            }
+            updateWorkspace();
+        } catch (error) {
+            console.log("Something wrong with connection!!")
+        }
     }
 
     function handleUpdateWork(event) {
@@ -38,8 +45,8 @@ export default function SimpleCard() {
                     <Grid className={classes.workGrid} item md={3} sm={12} >
                         <Container className={classes.workName}>
                             {workUpdateFlag ?
-                                <Container>
-                                    name < EditIcon onClick={toggleWorkUpdateFlag} />
+                                <Container style={{ fontSize: '80%', }}>
+                                    {workName} < EditIcon onClick={toggleWorkUpdateFlag} />
                                 </Container>
                                 :
                                 <form onSubmit={handleWorkUpdateSubmit}>
@@ -61,7 +68,7 @@ export default function SimpleCard() {
                             </Button>
                             </Grid>
                             <Grid item md={6}>
-                                <Button size='small' className={classes.workPapper}>
+                                <Button onClick={() => handleWorkDelete(work._id)} size='small' className={classes.workPapper}>
                                     <DeleteIcon /> <br />
                                 Delete
                             </Button>
@@ -79,17 +86,13 @@ export default function SimpleCard() {
                             </Button>
                             </Grid>
                         </Box>
-
                     </Grid>
 
                     <Grid item md={9} sm={12} className={classes.boardContainer} >
-
-                        {/* <CreateWork /> */}
-                        <CreateBoard />
-                        <BoardCard />
-                        <BoardCard />
-                        <BoardCard />
-                        <BoardCard />
+                        <CreateBoard workId={work._id} />
+                        {work.boards.map(b => (
+                            <BoardCard currBoard={b} workId={work._id} />
+                        ))}
                     </Grid>
                 </Grid>
             </CardContent>

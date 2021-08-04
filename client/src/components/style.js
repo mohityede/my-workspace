@@ -1,19 +1,6 @@
-import { FormHelperText } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
-    '@global': {
-        '*::-webkit-scrollbar': {
-            width: '0.4em'
-        },
-        '*::-webkit-scrollbar-track': {
-            '-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)'
-        },
-        '*::-webkit-scrollbar-thumb': {
-            backgroundColor: 'rgba(0,0,0,.1)',
-            outline: '1px solid slategrey'
-        }
-    },
     addCard: {
         boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
         padding: '16px',
@@ -21,37 +8,26 @@ export default makeStyles((theme) => ({
         backgroundColor: '#ebf5fc',
         maxWidth: '200px',
         cursor: 'pointer',
-        // height: '300px'
     },
     Container: {
-        // width: '80%',
         marginTop: '20px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column'
-        // margin: '0 100px 0 100px'
     },
     HomeContainer: {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        flexDirection: 'column',
+        flexDirection: 'column-reverse',
         padding: '10px',
         [theme.breakpoints.down('xs')]: {
             flexDirection: 'column',
             alignItems: 'center',
         },
     },
-    // headContainer: {
-    //     display: 'flex',
-    //     // justifyContent: 'flex-start',
-    //     // alignItems: 'flex-start',
-    //     margin: 0
-    // },
     heading: {
-        // textAlign: 'center',
-        // textAlign: 'start',
         fontSize: '20px',
         marginTop: '20px',
         fontWeight: 'bold',
@@ -86,7 +62,6 @@ export default makeStyles((theme) => ({
     },
     workActions: {
         width: '200px',
-        // margin: '5px',
         display: 'flex',
         flexWrap: 'wrap',
         flexDirection: 'row',
@@ -95,7 +70,6 @@ export default makeStyles((theme) => ({
         flexShrink: 'initial',
         [theme.breakpoints.down('sm')]: {
             width: '100%',
-            // justifyContant: 'center'
         }
     },
     workPapper: {
@@ -113,14 +87,10 @@ export default makeStyles((theme) => ({
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
-        // flexWrap: 'wrap',
-        // overflowX: 'scroll',
-
         [theme.breakpoints.down('xs')]: {
             justifyContent: 'center',
             overflowX: 'visible',
             flexWrap: 'wrap',
-            // overflowY: 'scroll'
         }
     },
     boardPaper: {
