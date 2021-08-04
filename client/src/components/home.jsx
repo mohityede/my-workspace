@@ -1,7 +1,6 @@
-
-import { Container, Typography } from '@material-ui/core';
-// import { useState, useEffect } from 'react';
+import { Container, Typography, TextField, Button, Fab } from '@material-ui/core';
 import SimpleCard from './card';
+import CreateWork from './createWork';
 import useStyles from './style';
 
 function Home() {
@@ -10,12 +9,7 @@ function Home() {
     return (
         <>
             <Container className={classes.Container} >
-                <Container>
-                    <Container className={classes.addCard}>
-                        <Typography variant='h3' >+</Typography>
-                        <Typography>Create Workspaces</Typography>
-                    </Container>
-                </Container>
+                <CreateWork />
                 <Container>
                     <Typography className={classes.heading} >Existing Workspaces</Typography>
                 </Container>

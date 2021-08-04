@@ -20,6 +20,7 @@ export default makeStyles((theme) => ({
         textAlign: 'center',
         backgroundColor: '#ebf5fc',
         maxWidth: '200px',
+        cursor: 'pointer',
         // height: '300px'
     },
     Container: {
@@ -67,6 +68,12 @@ export default makeStyles((theme) => ({
             maxHeight: '100vh'
         }
     },
+    workGrid: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column'
+    },
     workName: {
         width: '200px',
         fontSize: '25px',
@@ -79,26 +86,35 @@ export default makeStyles((theme) => ({
     },
     workActions: {
         width: '200px',
-        margin: '5px',
+        // margin: '5px',
         display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        alignItems: 'space-between',
+        justifyContent: 'space-around',
+        flexShrink: 'initial',
         [theme.breakpoints.down('sm')]: {
             width: '100%',
-            justifyContant: 'center'
+            // justifyContant: 'center'
         }
     },
     workPapper: {
         display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center',
+        fontSize: '10px',
+        fontWeight: 'bold',
         margin: '5px',
-        padding: '10px'
+        padding: '10px',
+        background: 'white',
+        width: '100%'
     },
     boardContainer: {
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
         // flexWrap: 'wrap',
-        overflowX: 'scroll',
+        // overflowX: 'scroll',
 
         [theme.breakpoints.down('xs')]: {
             justifyContent: 'center',
@@ -112,5 +128,18 @@ export default makeStyles((theme) => ({
         minHeight: '100%',
         height: '130px',
         margin: '10px',
+    },
+    workUpdateInput: {
+        marginBottom: '25px',
+    },
+    createBoard: {
+        minWidth: '130px',
+        minHeight: '100%',
+        height: '130px',
+        margin: '10px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
     }
 }));
